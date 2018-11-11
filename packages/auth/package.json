@@ -12,7 +12,7 @@
   "license": "ISC",
   "main": "dist/index.js",
   "directories": {
-    "dist": "dist",
+    "dist": "dist"
   },
   "files": [
     "dist"
