@@ -1,5 +1,5 @@
 import React from 'react'
-import { FirekitAuthConsumer } from './firekit-auth-context'
+import { FirekitAuthConsumer } from './firekit-auth-provider'
 
 export default function withFirekitAuth(Component) {
   function FirekitComponent(props) {

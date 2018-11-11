@@ -9,13 +9,13 @@
   "author": "Michael Martin <martinmsm@gmail.com>",
   "homepage": "",
   "license": "ISC",
-  "main": "lib/base.js",
+  "main": "dist/index.js",
   "directories": {
-    "lib": "lib",
+    "dist": "dist",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"

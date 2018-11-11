@@ -12,11 +12,10 @@
   "license": "ISC",
   "main": "dist/index.js",
   "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+    "dist": "dist",
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -49,5 +48,6 @@
     "firebase": "5.x.x"
   },
   "dependencies": {
+    "@firekit/base": "0.0.0"
   }
 }
