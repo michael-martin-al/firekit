@@ -1,6 +1,6 @@
 {
   "name": "@firekit/auth",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Firekit Authentication Helpers for Firebase",
   "keywords": [
     "Firekit",
@@ -38,16 +38,14 @@
     "eslint-plugin-import": "^2.14.0"
   },
   "peerDependencies": {
+    "@firekit/base": "0.x.x",
     "@material-ui/core": "3.x.x",
     "@material-ui/icons": "3.x.x",
+    "firebase": "5.x.x",
     "firebaseui": "3.x.x",
-    "react-firebaseui": "3.x.x",
     "prop-types": "15.x.x",
     "react": "16.x.x",
-    "react-router-dom": "4.x.x",
-    "@firekit/base": "0.x.x",
-    "firebase": "5.x.x"
-  },
-  "dependencies": {
+    "react-firebaseui": "3.x.x",
+    "react-router-dom": "4.x.x"
   }
 }
