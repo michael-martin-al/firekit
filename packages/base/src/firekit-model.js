@@ -1,6 +1,5 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-console */
-import md5 from 'md5'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 
@@ -144,12 +143,13 @@ class TuposFirestoreModel {
   }
 
   getHash() {
-    const data = this.getDataObject()
-    const values = Object.keys(data).map((prop) => {
-      return data[prop]
-    })
-    values.sort()
-    return md5(values.join(''))
+    return ''
+    // const data = this.getDataObject()
+    // const values = Object.keys(data).map((prop) => {
+    //   return data[prop]
+    // })
+    // values.sort()
+    // return md5(values.join(''))
   }
 
   firestoreRef() {

@@ -1,7 +1,7 @@
-import setBoolean from './setters/boolean'
-import setDate from './setters/date'
-import setNumber from './setters/number'
-import setString from './setters/string'
+import setBoolean from './boolean'
+import setDate from './date'
+import setNumber from './number'
+import setString from './string'
 
 export default {
   setBoolean,
