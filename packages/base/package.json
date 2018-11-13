@@ -1,6 +1,6 @@
 {
   "name": "@firekit/base",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Firekit base helpers for Firebase",
   "keywords": [
     "Firekit",
