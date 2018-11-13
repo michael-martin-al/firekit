@@ -3,21 +3,12 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 
-const firebaseApp = firebase.initializeApp({
-  apiKey: 'AIzaSyBpjeDlfIPFDq1gTRIew4mPH3Ff8Ji-Yzw',
-  authDomain: 'spayxperts-pm.firebaseapp.com',
-  databaseURL: 'https://spayxperts-pm.firebaseio.com',
-  projectId: 'spayxperts-pm',
-  storageBucket: 'spayxperts-pm.appspot.com',
-  messagingSenderId: '1094945037456',
-})
-
 const firestoreSettings = {
   timestampsInSnapshots: true,
 }
 firebase.firestore().settings(firestoreSettings)
 
-class TuposFirestoreModel {
+class FirekitModel {
   static async load(docPath) {
     try {
       const doc = await firebase.app().firestore().doc(docPath).get()
@@ -35,7 +26,7 @@ class TuposFirestoreModel {
     const whereLimit = Math.ceil(limit / wheres.length)
 
     const whereResults = await Promise.all(wheres.map(async (where) => {
-      return TuposFirestoreModel.loadCollection(collectionPath, [ where ], orderBy, whereLimit)
+      return FirekitModel.loadCollection(collectionPath, [ where ], orderBy, whereLimit)
     }))
 
     return [].concat(...whereResults)
@@ -135,11 +126,11 @@ class TuposFirestoreModel {
   }
 
   collectionPath() {
-    throw new Error('Method collectionPath() required for FirestoreModel')
+    throw new Error('Method collectionPath() required for FirekitModel')
   }
 
   getDataObject() {
-    throw new Error('Method geDataObject() required for FirestoreModel')
+    throw new Error('Method geDataObject() required for FirekitModel')
   }
 
   getHash() {
@@ -172,4 +163,4 @@ class TuposFirestoreModel {
   }
 }
 
-export default TuposFirestoreModel
+export default FirekitModel

@@ -9,15 +9,6 @@ import SignIn from './sign-in'
 
 const organizationId = 'tpK2esZwy93ZNmmPXwlb'
 
-const FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyBpjeDlfIPFDq1gTRIew4mPH3Ff8Ji-Yzw',
-  authDomain: 'spayxperts-pm.firebaseapp.com',
-  databaseURL: 'https://spayxperts-pm.firebaseio.com',
-  projectId: 'spayxperts-pm',
-  storageBucket: 'spayxperts-pm.appspot.com',
-  messagingSenderId: '1094945037456',
-}
-
 const FIRESTORE_CONFIG = {
   timestampsInSnapshots: true,
 }
@@ -25,7 +16,7 @@ const FIRESTORE_CONFIG = {
 const DEFAULT_STATE = {
   isSignedIn: undefined,
   user: null,
-  firebaseApp: firebase.initializeApp(FIREBASE_CONFIG),
+  firebaseApp: firebase.app(),
   userProfile: null,
   organization: null,
   signinOpen: false,
