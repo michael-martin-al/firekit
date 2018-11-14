@@ -7,12 +7,6 @@ import User from './user'
 import Organization from './organization'
 import SignIn from './sign-in'
 
-const organizationId = 'tpK2esZwy93ZNmmPXwlb'
-
-const FIRESTORE_CONFIG = {
-  timestampsInSnapshots: true,
-}
-
 const DEFAULT_STATE = {
   isSignedIn: undefined,
   user: null,
@@ -30,15 +24,14 @@ export default class FirekitAuthProvider extends Component {
   constructor(props) {
     super(props)
     this.state = Object.assign({}, DEFAULT_STATE, { firebaseApp: props.firebaseApp || firebase.app() })
-    firebase.firestore().settings(FIRESTORE_CONFIG)
-
+    firebase.firestore().settings({ timestampsInSnapshots: true })
     this.handleClose = this.handleClose.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
   }
 
   componentDidMount() {
     /* eslint-disable react/no-did-mount-set-state */
-
+    const { organizationId } = this.props
     const { firebaseApp } = this.state
     try {
       this.unregisterAuthObserver = firebaseApp.auth().onAuthStateChanged(async (user) => {

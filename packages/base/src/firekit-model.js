@@ -3,36 +3,26 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 
-const firestoreSettings = {
-  timestampsInSnapshots: true,
-}
-
 class FirekitModel {
-  constructor() {
-    firebase.firestore().settings(firestoreSettings)
-  }
-
-  static async load(docPath) {
+  static async load(docPath, watchFunction = null) {
     try {
       const doc = await firebase.app().firestore().doc(docPath).get()
+
+      if (typeof watchFunction === 'function') {
+        return firebase.app().firestore().doc(docPath).onSnapshot((docSnapshot) => {
+          watchFunction(docSnapshot.data() || {})
+        })
+      }
+
       if (doc.exists) {
         return doc.data()
       }
+
       console.error('Could not locate doc:', docPath)
     } catch (error) {
       console.error('Unable to load:', docPath, error)
     }
     return null
-  }
-
-  static async loadORCollection(collectionPath, wheres = [], orderBy = null, limit = null) {
-    const whereLimit = Math.ceil(limit / wheres.length)
-
-    const whereResults = await Promise.all(wheres.map(async (where) => {
-      return FirekitModel.loadCollection(collectionPath, [ where ], orderBy, whereLimit)
-    }))
-
-    return [].concat(...whereResults)
   }
 
   static async loadCollection(collectionPath, wheres = [], orderBy = null, limit = null, watchFunction = null) {
@@ -136,16 +126,6 @@ class FirekitModel {
     throw new Error('Method toObject() required for FirekitModel')
   }
 
-  getHash() {
-    return ''
-    // const data = this.toObject()
-    // const values = Object.keys(data).map((prop) => {
-    //   return data[prop]
-    // })
-    // values.sort()
-    // return md5(values.join(''))
-  }
-
   firestoreRef() {
     return firebase.app().firestore().doc(`${this.collectionPath()}/${this.id}`)
   }
@@ -162,6 +142,14 @@ class FirekitModel {
     } catch (e) {
       console.error(e)
       return e
+    }
+  }
+
+  delete() {
+    try {
+      return this.firestoreRef().delete()
+    } catch (e) {
+      console.error(`Error deleting document: ${e.toString()}`)
     }
   }
 }
