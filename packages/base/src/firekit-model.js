@@ -6,9 +6,12 @@ import 'firebase/firestore'
 const firestoreSettings = {
   timestampsInSnapshots: true,
 }
-firebase.firestore().settings(firestoreSettings)
 
 class FirekitModel {
+  constructor() {
+    firebase.firestore().settings(firestoreSettings)
+  }
+
   static async load(docPath) {
     try {
       const doc = await firebase.app().firestore().doc(docPath).get()
@@ -129,13 +132,13 @@ class FirekitModel {
     throw new Error('Method collectionPath() required for FirekitModel')
   }
 
-  getDataObject() {
-    throw new Error('Method geDataObject() required for FirekitModel')
+  toObject() {
+    throw new Error('Method toObject() required for FirekitModel')
   }
 
   getHash() {
     return ''
-    // const data = this.getDataObject()
+    // const data = this.toObject()
     // const values = Object.keys(data).map((prop) => {
     //   return data[prop]
     // })
@@ -151,11 +154,11 @@ class FirekitModel {
     try {
       if (this.id) {
         if (batch) {
-          return batch.set(this.firestoreRef(), this.getDataObject())
+          return batch.set(this.firestoreRef(), this.toObject())
         }
-        return this.firestoreRef().set(this.getDataObject())
+        return this.firestoreRef().set(this.toObject())
       }
-      return firebase.app().firestore().collection(this.collectionPath()).add(this.getDataObject())
+      return firebase.app().firestore().collection(this.collectionPath()).add(this.toObject())
     } catch (e) {
       console.error(e)
       return e

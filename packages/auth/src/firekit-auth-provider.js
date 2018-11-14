@@ -22,8 +22,6 @@ const DEFAULT_STATE = {
   signinOpen: false,
 }
 
-firebase.firestore().settings(FIRESTORE_CONFIG)
-
 const FirekitAuthContext = React.createContext(DEFAULT_STATE)
 
 export const FirekitAuthConsumer = FirekitAuthContext.Consumer
@@ -32,6 +30,7 @@ export default class FirekitAuthProvider extends Component {
   constructor(props) {
     super(props)
     this.state = Object.assign({}, DEFAULT_STATE, { firebaseApp: props.firebaseApp || firebase.app() })
+    firebase.firestore().settings(FIRESTORE_CONFIG)
 
     this.handleClose = this.handleClose.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
