@@ -16,7 +16,7 @@ const FIRESTORE_CONFIG = {
 const DEFAULT_STATE = {
   isSignedIn: undefined,
   user: null,
-  firebaseApp: firebase.app(),
+  firebaseApp: null,
   userProfile: null,
   organization: null,
   signinOpen: false,
@@ -31,7 +31,7 @@ export const FirekitAuthConsumer = FirekitAuthContext.Consumer
 export default class FirekitAuthProvider extends Component {
   constructor(props) {
     super(props)
-    this.state = DEFAULT_STATE
+    this.state = Object.assign({}, DEFAULT_STATE, { firebaseApp: props.firebaseApp || firebase.app() })
 
     this.handleClose = this.handleClose.bind(this)
     this.handleOpen = this.handleOpen.bind(this)

@@ -37,7 +37,7 @@
     "eslint-plugin-import": "^2.14.0"
   },
   "peerDependencies": {
-    "@firekit/base": "0.0.0",
+    "@firekit/base": "0.x.x",
     "@material-ui/core": "3.x.x",
     "@material-ui/icons": "3.x.x",
     "firebase": "5.x.x",
@@ -46,5 +46,6 @@
     "react": "16.x.x",
     "react-firebaseui": "3.x.x",
     "react-router-dom": "4.x.x"
-  }
+  },
+  "dependencies": {}
 }
