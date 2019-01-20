@@ -5,7 +5,6 @@ import 'firebase/firestore'
 import 'firebase/auth'
 import User from './user'
 import Organization from './organization'
-import SignIn from './sign-in'
 
 const DEFAULT_STATE = {
   isSignedIn: undefined,
@@ -90,11 +89,7 @@ export default class FirekitAuthProvider extends Component {
       >
         <React.Fragment>
           {children}
-          { SignInComponent
-            ? <SignInComponent open={signinOpen} firebaseApp={firebaseApp} handleClose={this.handleClose} />
-            : <SignIn open={signinOpen} firebaseApp={firebaseApp} handleClose={this.handleClose} />
-          }
-
+          { SignInComponent && <SignInComponent open={signinOpen} firebaseApp={firebaseApp} handleClose={this.handleClose} /> }
         </React.Fragment>
       </FirekitAuthContext.Provider>
     )
