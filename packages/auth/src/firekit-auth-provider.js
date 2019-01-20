@@ -67,7 +67,7 @@ export default class FirekitAuthProvider extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, SignInComponent } = this.props
     const {
       isSignedIn,
       user,
@@ -90,7 +90,11 @@ export default class FirekitAuthProvider extends Component {
       >
         <React.Fragment>
           {children}
-          <SignIn open={signinOpen} firebaseApp={firebaseApp} handleClose={this.handleClose} />
+          { SignInComponent
+            ? <SignInComponent open={signinOpen} firebaseApp={firebaseApp} handleClose={this.handleClose} />
+            : <SignIn open={signinOpen} firebaseApp={firebaseApp} handleClose={this.handleClose} />
+          }
+
         </React.Fragment>
       </FirekitAuthContext.Provider>
     )
