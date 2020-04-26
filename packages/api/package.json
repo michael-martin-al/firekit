@@ -29,5 +29,15 @@
   },
   "dependencies": {
     "firebase": "^7.14.2"
+  },
+  "devDependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-query": "^1.2.9"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-query": "^1.2.9"
   }
 }

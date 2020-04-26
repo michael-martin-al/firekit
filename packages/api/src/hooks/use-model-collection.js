@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuery } from 'react-query'
-import makeStateModel from '../../$model-kit/model/make-state-model'
+import { makeStateModel } from '../model-creators/make-state-model'
 
 export const states = makeStateModel([
   'loading',
@@ -16,7 +16,7 @@ export const states = makeStateModel([
  * @param {Any} config.collectionKey 
  * @param {Object} config.queryConfig
  */
-function useModelCollection({ loadCollection, collectionKey, queryConfig = {} }) {
+export function useModelCollection({ loadCollection, collectionKey, queryConfig = {} }) {
   const [state, setState] = React.useState(states.loading)
 
   const {
@@ -38,5 +38,3 @@ function useModelCollection({ loadCollection, collectionKey, queryConfig = {} })
     reload
   }
 }
-
-export default useModelCollection

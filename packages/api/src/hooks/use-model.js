@@ -1,6 +1,7 @@
 import React from 'react'
 import { useQuery } from 'react-query'
-import makeStateModel from '../../$model-kit/model/make-state-model'
+import { makeStateModel } from '../model-creators/make-state-model'
+
 
 export const states = makeStateModel([
   'idle',
@@ -14,7 +15,7 @@ export const states = makeStateModel([
   'deleteSuccess'
 ])
 
-export default function useModel({
+export function useModel({
   loadModel,
   saveModel,
   deleteModel,
