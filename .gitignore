@@ -1,5 +1,8 @@
-.cache
+*.DS_Store
 node_modules
-node_modules/*
-dist/*
+coverage
+lib
+.envrc
 *.log
+**/node_modules
+**/lib

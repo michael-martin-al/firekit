@@ -1,8 +1,27 @@
 {
-  "name": "root",
+  "name": "firekit",
+  "description": "Opinionated set of Firebase Tools",
+  "repository": "https://github.com/michael-martin-al/firekit",
+  "author": "Michael Martin <martinmsm@gmail.com>",
+  "license": "ISC",
   "private": true,
   "devDependencies": {
-    "lerna": "^3.4.3"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^25.4.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "inquirer": "^7.1.0",
+    "jest": "^25.4.0",
+    "jest-fetch-mock": "^3.0.3",
+    "lerna": "^3.20.2",
+    "regenerator-runtime": "^0.13.5"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "scripts": {
+    "test": "jest"
+  }
 }

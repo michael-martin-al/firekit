@@ -1,0 +1,25 @@
+{
+  "presets": [
+    "@babel/react",
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "browsers": "last 2 versions",
+          "node": "12.16.2"
+        }
+      }
+    ]
+  ],
+  "env": {
+    "build": {
+      "ignore": [
+        "**/*.test.js",
+        "__tests__"
+      ]
+    }
+  },
+  "ignore": [
+    "node_modules"
+  ]
+}
