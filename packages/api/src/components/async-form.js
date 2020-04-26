@@ -1,9 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { states } from '../hooks/use-model'
+import { useModel } from '../hooks/use-model'
+
 const AsyncFormContext = React.createContext()
 
 AsyncFormContext.displayName = 'AsyncFormContext'
+
+const states = useModel.states
 
 function useAsyncForm() {
   const context = React.useContext(AsyncFormContext)

@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { states } from '../hooks/use-model'
+import { useModel } from '../hooks/use-model'
 const AsyncViewContext = React.createContext()
 
 AsyncViewContext.displayName = 'AsyncViewContext'
+
+const states = useModel.states
 
 function useAsyncView() {
   const context = React.useContext(AsyncViewContext)

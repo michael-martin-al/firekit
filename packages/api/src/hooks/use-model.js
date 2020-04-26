@@ -96,3 +96,5 @@ export function useModel({
     error,
   }
 }
+
+useModel.states = states

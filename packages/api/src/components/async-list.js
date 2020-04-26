@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { states } from '../hooks/use-model-collection'
+import { useModelCollection } from '../hooks/use-model-collection'
 const AsyncListContext = React.createContext()
 
 AsyncListContext.displayName = 'AsyncListContext'
+
+const states = useModelCollection.states
 
 function useAsyncList() {
   const context = React.useContext(AsyncListContext)

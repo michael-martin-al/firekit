@@ -38,3 +38,5 @@ export function useModelCollection({ loadCollection, collectionKey, queryConfig 
     reload
   }
 }
+
+useModelCollection.states = states 
