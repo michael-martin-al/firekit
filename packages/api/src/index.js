@@ -4,6 +4,7 @@ import { makeModel } from './model-creators/make-model'
 import { makeStateModel } from './model-creators/make-state-model'
 import { useModel } from './hooks/use-model'
 import { useModelCollection } from './hooks/use-model-collection'
+import { makeClientModel } from './helpers/make-client-model'
 
 import {
   AsyncList,
@@ -35,6 +36,7 @@ export {
   makeStateModel,
   useModel,
   useModelCollection,
+  makeClientModel,
 
   /* AsyncForm */
   AsyncForm,
