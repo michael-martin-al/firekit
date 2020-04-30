@@ -6,18 +6,15 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBX6kmQYvriE9oR7LfHNa6pR_o7evrJGa8",
-  authDomain: "michael-bradley-martin.firebaseapp.com",
-  databaseURL: "https://michael-bradley-martin.firebaseio.com",
-  projectId: "michael-bradley-martin",
-  storageBucket: "michael-bradley-martin.appspot.com",
-  messagingSenderId: "704726642210",
-  appId: "1:704726642210:web:54067744907d9983f1647b",
-  measurementId: "G-D4B4F1CQ0G",
-};
-
-firebase.initializeApp(firebaseConfig)
+/**
+ * Initialize Firebase
+ * A wrapper for `firebase.initializeApp`
+ * 
+ * @param {Object} config 
+ */
+export function init(config) {
+  firebase.initializeApp(firebaseConfig)
+}
 
 /**
  * 
