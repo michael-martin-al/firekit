@@ -1,6 +1,6 @@
 {
   "name": "@firekit/api",
-  "version": "1.0.2-alpha.4",
+  "version": "1.0.2-alpha.5",
   "description": "Opinionated library of Firestore components, models, clients, etc.",
   "author": "Michael Martin <martinmsm@gmail.com>",
   "homepage": "https://github.com/michael-martin-al/firekit",
@@ -27,17 +27,16 @@
     "prepare": "npm run compile",
     "watch": "BABEL_ENV=build ../../node_modules/.bin/babel --root-mode upward src --out-dir lib --source-maps --extensions .js --delete-dir-on-start --no-comments --watch"
   },
-  "dependencies": {},
   "devDependencies": {
+    "firebase": "^7.14.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-query": "^1.2.9",
-    "firebase": "^7.14.2"
+    "react-query": "^1.2.9"
   },
   "peerDependencies": {
+    "firebase": "^7.14.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-query": "^1.2.9",
-    "firebase": "^7.14.2"
+    "react-query": "^1.2.9"
   }
 }
