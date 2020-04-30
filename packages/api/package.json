@@ -27,17 +27,17 @@
     "prepare": "npm run compile",
     "watch": "BABEL_ENV=build ../../node_modules/.bin/babel --root-mode upward src --out-dir lib --source-maps --extensions .js --delete-dir-on-start --no-comments --watch"
   },
-  "dependencies": {
-    "firebase": "^7.14.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-query": "^1.2.9"
+    "react-query": "^1.2.9",
+    "firebase": "^7.14.2"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-query": "^1.2.9"
+    "react-query": "^1.2.9",
+    "firebase": "^7.14.2"
   }
 }
