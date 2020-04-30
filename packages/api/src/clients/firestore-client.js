@@ -13,7 +13,7 @@ import 'firebase/firestore'
  * @param {Object} config 
  */
 export function init(config) {
-  firebase.initializeApp(firebaseConfig)
+  return firebase.initializeApp(firebaseConfig)
 }
 
 /**
