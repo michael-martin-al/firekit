@@ -33,5 +33,6 @@
     "react": "^16.13.1",
     "react-query": "^1.2.9",
     "yup": "^0.28.5"
-  }
+  },
+  "gitHead": "fc55d189dfe385defbeb71f4c65e452a8c364ce8"
 }

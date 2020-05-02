@@ -29,7 +29,7 @@
   "dependencies": {},
   "scripts": {
     "lint": "eslint --fix ./packages/ --ext .js,.jsx",
-    "publish": "npm run validate && lerna publish --contents lib",
+    "publish": "npm run validate && lerna publish",
     "test": "jest --silent --coverage",
     "validate": "npm run lint && npm test"
   }
