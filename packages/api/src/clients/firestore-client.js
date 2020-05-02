@@ -7,22 +7,12 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 
 /**
- * Initialize Firebase
- * A wrapper for `firebase.initializeApp`
- * 
- * @param {Object} config 
- */
-export function init(config) {
-  return firebase.initializeApp(firebaseConfig)
-}
-
-/**
  * 
  * @param {*} param0 
  * @param {Function} param0.Model
  * @param {String} param0.docPath
  */
-export function load({ Model, docPath }) {
+export function load({ Model, docPath } = {}) {
   async function load() {
     const doc = await firebase.app().firestore().doc(docPath).get()
     if (doc.exists) {
@@ -42,18 +32,40 @@ export function load({ Model, docPath }) {
  * Load a collection of Firestore document and
  * return them as an array of Model objects
  * 
- * @param {Function} Model 
- * @param {String} collectionPath 
+ * @param {Object} config
+ * @param {Function} config.Model
+ * @param {String} config.collectionPath
+ * @param {Array} config.where
+ * @param {Object} config.order
+ * @param {String} config.order.field
+ * @param {String} config.order.direction
+ * @param {Number} config.limit
  * 
  * @returns {Array[Model]}
  */
-export function loadCollection({ Model, collectionPath }) {
+export function loadCollection({ Model, collectionPath, where, order, limit } = {}) {
   async function loadCollection() {
     let docs = []
     let collection
+    let query = firebase.app().firestore().collection(collectionPath)
+
+    if (Array.isArray(where)) {
+      where.forEach(({ field, operator, value }) => {
+        query = query.where(field, operator, value)
+      })
+    }
+
+    if (order !== null && typeof order === 'object' && 'field' in order) {
+      const { field, direction = 'asc' } = order
+      query = query.orderBy(field, direction)
+    }
+
+    if (typeof limit === 'number') {
+      collectionQuery = collectionQuery.limit(limit)
+    }
 
     try {
-      collection = await firebase.app().firestore().collection(collectionPath).get()
+      collection = await query.get()
     } catch (e) {
       throw new Error(`Failed to load collection from Firestore at ${collectionPath}`)
     }
@@ -72,7 +84,7 @@ export function loadCollection({ Model, collectionPath }) {
 
     return docs
   }
-  loadCollection.key = [collectionPath]
+  loadCollection.key = [collectionPath, where, order, limit]
   return loadCollection
 }
 
