@@ -5,6 +5,8 @@ import { makeStateModel } from './model-creators/make-state-model'
 import { useModel } from './hooks/use-model'
 import { useModelCollection } from './hooks/use-model-collection'
 import { makeClientModel } from './helpers/make-client-model'
+import { FirekitAuthProvider, useFirekitAuth } from './providers/firekit-auth'
+import { FirekitOrganizationProvider, useFirekitOrganization } from './providers/firekit-organization'
 
 import {
   AsyncList,
@@ -57,6 +59,14 @@ export {
   AsyncList,
   ListError,
   ListLoading,
-  ListContent
+  ListContent,
+
+  /* FirekitAuth */
+  FirekitAuthProvider,
+  useFirekitAuth,
+
+  /* FirekitOrganization */
+  FirekitOrganizationProvider,
+  useFirekitOrganization
 }
 
