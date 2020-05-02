@@ -5,7 +5,7 @@ import { makeStateModel } from './model-creators/make-state-model'
 import { useModel } from './hooks/use-model'
 import { useModelCollection } from './hooks/use-model-collection'
 import { makeClientModel } from './helpers/make-client-model'
-import { FirekitAuthProvider, useFirekitAuth } from './providers/firekit-auth'
+import { FirekitAuthProvider, FirekitAuthLoading, FirekitAuthError, FirekitAuthContent, useFirekitAuth } from './providers/firekit-auth'
 import { FirekitOrganizationProvider, useFirekitOrganization } from './providers/firekit-organization'
 
 import {
@@ -63,6 +63,9 @@ export {
 
   /* FirekitAuth */
   FirekitAuthProvider,
+  FirekitAuthLoading,
+  FirekitAuthError,
+  FirekitAuthContent,
   useFirekitAuth,
 
   /* FirekitOrganization */
