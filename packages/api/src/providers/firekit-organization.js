@@ -8,12 +8,9 @@ import * as yup from 'yup'
 const FirekitOrganizationContext = React.createContext()
 FirekitOrganizationContext.displayName = 'FirekitOrganizationContext'
 
-export function useOrganization() {
-  return React.useContext(FirekitOrganizationContext)
-}
 
 export function useFirekitOrganization() {
-  const context = React.useContext(FirekitAuthContext)
+  const context = React.useContext(FirekitOrganizationContext)
   if (context === undefined) {
     throw new Error(`useFirekitOrganization must be used within a FirekitOrganizationContext`)
   }
