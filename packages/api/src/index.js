@@ -1,25 +1,33 @@
-'use strict'
 import * as firestoreClient from './clients/firestore-client'
 import { makeModel } from './model-creators/make-model'
 import { makeStateModel } from './model-creators/make-state-model'
 import { useModel } from './hooks/use-model'
 import { useModelCollection } from './hooks/use-model-collection'
 import { makeClientModel } from './helpers/make-client-model'
-import { FirekitAuthProvider, FirekitAuthLoading, FirekitAuthError, FirekitAuthContent, useFirekitAuth } from './providers/firekit-auth'
-import { FirekitOrganizationProvider, useFirekitOrganization } from './providers/firekit-organization'
+import {
+  FirekitAuthProvider,
+  FirekitAuthLoading,
+  FirekitAuthError,
+  FirekitAuthContent,
+  useFirekitAuth,
+} from './providers/firekit-auth'
+import {
+  FirekitOrganizationProvider,
+  useFirekitOrganization,
+} from './providers/firekit-organization'
 
 import {
   AsyncList,
   ListError,
   ListLoading,
-  ListContent
+  ListContent,
 } from './components/async-list'
 
 import {
   AsyncView,
   ViewContent,
   ViewError,
-  ViewLoading
+  ViewLoading,
 } from './components/async-view'
 
 import {
@@ -29,7 +37,7 @@ import {
   FormError,
   FormLoadError,
   FormLoading,
-  FormDeleteSuccess
+  FormDeleteSuccess,
 } from './components/async-form'
 
 export {
@@ -39,7 +47,6 @@ export {
   useModel,
   useModelCollection,
   makeClientModel,
-
   /* AsyncForm */
   AsyncForm,
   FormActions,
@@ -48,28 +55,23 @@ export {
   FormLoadError,
   FormLoading,
   FormDeleteSuccess,
-
   /* AsyncView */
   AsyncView,
   ViewContent,
   ViewError,
   ViewLoading,
-
   /* AsyncList */
   AsyncList,
   ListError,
   ListLoading,
   ListContent,
-
   /* FirekitAuth */
   FirekitAuthProvider,
   FirekitAuthLoading,
   FirekitAuthError,
   FirekitAuthContent,
   useFirekitAuth,
-
   /* FirekitOrganization */
   FirekitOrganizationProvider,
-  useFirekitOrganization
+  useFirekitOrganization,
 }
-

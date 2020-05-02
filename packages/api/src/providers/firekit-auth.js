@@ -15,22 +15,24 @@ export function useFirekitAuth() {
 
 export function FirekitAuthLoading({ children }) {
   const { isIdle, isLoading } = useFirekitAuth()
-  return (isIdle || isLoading)
-    ? children
-    : null
+  return isIdle || isLoading ? children : null
 }
 
 export function FirekitAuthError({ children }) {
   const { isError, error } = useFirekitAuth()
   return isError
-    ? React.Children.map(children, (child) => React.cloneElement(child, { error }))
+    ? React.Children.map(children, (child) =>
+        React.cloneElement(child, { error }),
+      )
     : null
 }
 
 export function FirekitAuthContent({ children }) {
   const context = useFirekitAuth()
   return context.isSuccess
-    ? React.Children.map(children, (child) => React.cloneElement(child, { ...context }))
+    ? React.Children.map(children, (child) =>
+        React.cloneElement(child, { ...context }),
+      )
     : null
 }
 
@@ -46,16 +48,22 @@ export function FirekitAuthProvider(props) {
 
   React.useEffect(() => {
     setState('loading')
-    return firebase.auth().onAuthStateChanged((FirebaseUser) => {
-      setUser(FirebaseUser)
-      setState('success')
-    }, (e) => {
-      setError(e)
-      setState('error')
-    })
+    return firebase.auth().onAuthStateChanged(
+      (FirebaseUser) => {
+        setUser(FirebaseUser)
+        setState('success')
+      },
+      (e) => {
+        setError(e)
+        setState('error')
+      },
+    )
   }, [])
 
-  const value = React.useMemo(() => ({ user, isLoading, isIdle, isSuccess, isSignedIn, error }), [user, isLoading, isIdle, isSuccess, isSignedIn, error])
+  const value = React.useMemo(
+    () => ({ user, isLoading, isIdle, isSuccess, isSignedIn, error }),
+    [user, isLoading, isIdle, isSuccess, isSignedIn, error],
+  )
 
   return <FirekitAuthContext.Provider value={value} {...props} />
 }

@@ -7,31 +7,30 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 
 /**
- * 
- * @param {*} param0 
+ *
+ * @param {*} param0
  * @param {Function} param0.Model
  * @param {String} param0.docPath
  */
 export function load({ Model, docPath } = {}) {
-  async function load() {
+  async function loader() {
     const doc = await firebase.app().firestore().doc(docPath).get()
     if (doc.exists) {
       return Model({
         id: doc.id,
         data: doc.data(),
       })
-    } else {
-      return null
     }
+    return null
   }
-  load.key = [docPath]
-  return load
+  loader.key = [docPath]
+  return loader
 }
 
 /**
  * Load a collection of Firestore document and
  * return them as an array of Model objects
- * 
+ *
  * @param {Object} config
  * @param {Function} config.Model
  * @param {String} config.collectionPath
@@ -40,12 +39,18 @@ export function load({ Model, docPath } = {}) {
  * @param {String} config.order.field
  * @param {String} config.order.direction
  * @param {Number} config.limit
- * 
+ *
  * @returns {Array[Model]}
  */
-export function loadCollection({ Model, collectionPath, where, order, limit } = {}) {
-  async function loadCollection() {
-    let docs = []
+export function loadCollection({
+  Model,
+  collectionPath,
+  where,
+  order,
+  limit,
+} = {}) {
+  async function loader() {
+    const docs = []
     let collection
     let query = firebase.app().firestore().collection(collectionPath)
 
@@ -61,13 +66,15 @@ export function loadCollection({ Model, collectionPath, where, order, limit } = 
     }
 
     if (typeof limit === 'number') {
-      collectionQuery = collectionQuery.limit(limit)
+      query = query.limit(limit)
     }
 
     try {
       collection = await query.get()
     } catch (e) {
-      throw new Error(`Failed to load collection from Firestore at ${collectionPath}`)
+      throw new Error(
+        `Failed to load collection from Firestore at ${collectionPath}`,
+      )
     }
 
     collection.forEach((doc) => {
@@ -78,49 +85,57 @@ export function loadCollection({ Model, collectionPath, where, order, limit } = 
         })
         docs.push(model)
       } catch (e) {
-        throw new Error(`Couldn't create a model using the Firestore document at: ${collectionPath}/${doc.id}.`)
+        throw new Error(
+          `Couldn't create a model using the Firestore document at: ${collectionPath}/${doc.id}.`,
+        )
       }
     })
 
     return docs
   }
-  loadCollection.key = [collectionPath, where, order, limit]
-  return loadCollection
+  loader.key = [collectionPath, where, order, limit]
+  return loader
 }
 
 /**
  * Create a new Firestore document using
  * data from the Model instance
- * 
- * @param {String} collectionPath 
- * @param {Model} model 
- * 
+ *
+ * @param {String} collectionPath
+ * @param {Model} model
+ *
  * @returns {Promise}
  */
 export async function create({ collectionPath, model }) {
-  if (!model.$valid) throw new Error(`${model.$name} not valid. ${model.$error}`)
-  return firebase.app().firestore().collection(collectionPath).add(model.$object)
+  if (!model.$valid)
+    throw new Error(`${model.$name} not valid. ${model.$error}`)
+  return firebase
+    .app()
+    .firestore()
+    .collection(collectionPath)
+    .add(model.$object)
 }
 
 /**
  * Update an existing Firestore document using
  * data from the Model instance
- * 
- * @param {String} docPath 
- * @param {Model} model 
- * 
+ *
+ * @param {String} docPath
+ * @param {Model} model
+ *
  * @returns {Promise}
  */
 export async function update({ docPath, model }) {
-  if (!model.$valid) throw new Error(`${model.$name} not valid. ${model.$error}`)
+  if (!model.$valid)
+    throw new Error(`${model.$name} not valid. ${model.$error}`)
   return firebase.app().firestore().doc(docPath).update(model.$object)
 }
 
 /**
  * Delete an existing Firestore document
  * at the specified path
- * 
- * @param {String} docPath 
+ *
+ * @param {String} docPath
  */
 export async function del({ docPath }) {
   return firebase.app().firestore().doc(docPath).delete()

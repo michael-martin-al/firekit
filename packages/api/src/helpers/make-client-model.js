@@ -1,13 +1,10 @@
 import React from 'react'
-import { makeModel as baseMakeModel } from '@firekit/api'
-import { firestoreClient as firestore } from '@firekit/api'
-import { useModel as baseUseModel, useModelCollection as baseUseModelCollection } from '@firekit/api'
+import { makeModel as baseMakeModel } from '../model-creators/make-model'
+import * as firestore from '../clients/firestore-client'
+import { useModel as baseUseModel } from '../hooks/use-model'
+import { useModelCollection as baseUseModelCollection } from '../hooks/use-model-collection'
 
-export function makeClientModel({
-  name,
-  schema,
-  collectionPath
-}) {
+export function makeClientModel({ name, schema, collectionPath }) {
   const docPath = (id) => `${collectionPath}/${id}`
 
   function makeModel({ id, data }) {
@@ -15,41 +12,41 @@ export function makeClientModel({
       name,
       id,
       data,
-      schema
+      schema,
     })
   }
 
   function loadModel(id) {
     return firestore.load({
       Model: makeModel,
-      docPath: docPath(id)
+      docPath: docPath(id),
     })
   }
 
   function loadCollection() {
     return firestore.loadCollection({
       Model: makeModel,
-      collectionPath
+      collectionPath,
     })
   }
 
   async function createModel(model) {
     return firestore.create({
       collectionPath,
-      model
+      model,
     })
   }
 
   async function saveModel(model) {
     return firestore.update({
       docPath: docPath(model.$id),
-      model
+      model,
     })
   }
 
   async function deleteModel(model) {
     return firestore.del({
-      docPath: docPath(model.$id)
+      docPath: docPath(model.$id),
     })
   }
 
@@ -61,7 +58,7 @@ export function makeClientModel({
       },
       deleteModel,
       saveModel,
-      queryConfig
+      queryConfig,
     })
   }
 
@@ -71,7 +68,7 @@ export function makeClientModel({
     return baseUseModelCollection({
       loadCollection: collectionLoader,
       collectionKey: collectionLoader.key,
-      queryConfig
+      queryConfig,
     })
   }
 
@@ -83,6 +80,6 @@ export function makeClientModel({
     updateModel: saveModel,
     deleteModel,
     useModel,
-    useModelCollection
+    useModelCollection,
   }
 }

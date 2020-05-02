@@ -1,29 +1,24 @@
 import React from 'react'
+import * as yup from 'yup'
 import { useFirekitAuth } from './firekit-auth'
 import { makeModel as baseMakeModel } from '../model-creators/make-model'
 import { makeStateModel } from '../model-creators/make-state-model'
-import { firestoreClient as firestore } from '../clients/firestore-client'
-import * as yup from 'yup'
+import * as firestore from '../clients/firestore-client'
 
 const FirekitOrganizationContext = React.createContext()
 FirekitOrganizationContext.displayName = 'FirekitOrganizationContext'
 
-
 export function useFirekitOrganization() {
   const context = React.useContext(FirekitOrganizationContext)
   if (context === undefined) {
-    throw new Error(`useFirekitOrganization must be used within a FirekitOrganizationContext`)
+    throw new Error(
+      `useFirekitOrganization must be used within a FirekitOrganizationContext`,
+    )
   }
   return context
 }
 
-
-const states = makeStateModel([
-  'loading',
-  'idle',
-  'error',
-  'success'
-])
+const states = makeStateModel(['loading', 'idle', 'error', 'success'])
 
 function makeOrganizationModel({ id, data }) {
   return baseMakeModel({
@@ -31,8 +26,8 @@ function makeOrganizationModel({ id, data }) {
     id,
     data,
     schema: yup.object().shape({
-      name: yup.string().required('Name is required')
-    })
+      name: yup.string().required('Name is required'),
+    }),
   })
 }
 
@@ -42,8 +37,8 @@ function makeOrganizationUserModel({ id, data }) {
     id,
     data,
     schema: yup.object().shape({
-      organizationId: yup.string().required('OrganizationId is required')
-    })
+      organizationId: yup.string().required('OrganizationId is required'),
+    }),
   })
 }
 
@@ -56,12 +51,12 @@ export function FirekitOrganizationProvider(props) {
 
   React.useEffect(() => {
     if (user && user.uid) {
-      setState(states.loading);
-      (async () => {
+      setState(states.loading)
+      ;(async () => {
         try {
           const load = firestore.load({
             Model: makeOrganizationUserModel,
-            docPath: `/users/${user.uid}`
+            docPath: `/users/${user.uid}`,
           })
           setOrganizationUser(await load())
           setState(states.success)
@@ -78,11 +73,11 @@ export function FirekitOrganizationProvider(props) {
 
   React.useEffect(() => {
     if (organizationUser) {
-      (async () => {
+      ;(async () => {
         try {
           const load = firestore.load({
             Model: makeOrganizationModel,
-            docPath: `/organizations/${organizationUser.organizationId.$value}`
+            docPath: `/organizations/${organizationUser.organizationId.$value}`,
           })
           setOrganization(await load())
           setState(states.success)
@@ -95,11 +90,14 @@ export function FirekitOrganizationProvider(props) {
     }
   }, [organizationUser])
 
-  const value = React.useMemo(() => ({
-    organization, error, state
-  }), [organization, error, state])
-
-  return (
-    <FirekitOrganizationContext.Provider value={value} {...props} />
+  const value = React.useMemo(
+    () => ({
+      organization,
+      error,
+      state,
+    }),
+    [organization, error, state],
   )
+
+  return <FirekitOrganizationContext.Provider value={value} {...props} />
 }

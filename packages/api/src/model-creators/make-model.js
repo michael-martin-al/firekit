@@ -1,7 +1,10 @@
 export function makeModel({ name, id, data, schema }) {
-  if (Array.isArray(data)) throw new Error(`${name} model data cannot be an array.`)
-  if (typeof data !== 'object') throw new Error(`${name} model data must be an object.`)
-  if (Object.keys(data).length === 0) throw new Error(`${name} model data cannot be an empty object`)
+  if (Array.isArray(data))
+    throw new Error(`${name} model data cannot be an array.`)
+  if (typeof data !== 'object')
+    throw new Error(`${name} model data must be an object.`)
+  if (Object.keys(data).length === 0)
+    throw new Error(`${name} model data cannot be an empty object`)
   if (typeof name !== 'string') throw new Error('Model name must be a string.')
   if (name === '') throw new Error('Model name cannot be an empty string.')
 
@@ -17,14 +20,18 @@ export function makeModel({ name, id, data, schema }) {
     '$valid',
     '$error',
     '$object',
-    '$name'
+    '$name',
   ]
 
   const invalidPropNames = Object.keys(data).filter((key) => {
     return propNameBlacklist.indexOf(key) > -1
   })
 
-  if (invalidPropNames.length > 0) throw new Error(`Invalid prop names in model data: ${invalidPropNames.join(', ')}`)
+  if (invalidPropNames.length > 0) {
+    throw new Error(
+      `Invalid prop names in model data: ${invalidPropNames.join(', ')}`,
+    )
+  }
 
   let proxyTarget = { ...data }
 
@@ -40,30 +47,8 @@ export function makeModel({ name, id, data, schema }) {
     throw new Error(`${name} properties are read-only. ${messsage}`)
   }
 
-  function update(property, value) {
-    if (!(property in proxyTarget)) throw new Error(`Property "${property}" does not exist for "${name}" model.`)
-    proxyTarget = {
-      ...proxyTarget,
-      [property]: value
-    }
-
-    if (schema) {
-      try {
-        proxyTarget = schema.cast(proxyTarget)
-      } catch (e) {
-        // discard error
-      }
-    }
-
-    return buildProxy(proxyTarget)
-  }
-
-  function clone() {
-    return buildProxy(proxyTarget)
-  }
-
   function buildProxy(target) {
-    let validationErrors = {}
+    const validationErrors = {}
     let modelIsValid = true
     let modelValidationError
 
@@ -81,7 +66,7 @@ export function makeModel({ name, id, data, schema }) {
 
     return new Proxy(target, {
       /* eslint-disable object-shorthand */
-      get: function get(target, property) {
+      get: function get(getTarget, property) {
         // reserved property names
         if (property === '$$typeof') return name
         if (property === Symbol.iterator) return undefined
@@ -91,8 +76,13 @@ export function makeModel({ name, id, data, schema }) {
 
         // speical $ methods for model api
         if (property === '$id') return id
+
+        /* eslint-disable-next-line no-use-before-define */
         if (property === '$update') return update
+
+        /* eslint-disable-next-line no-use-before-define */
         if (property === '$clone') return clone
+
         if (property === '$valid') return modelIsValid
         if (property === '$error') return modelValidationError
         if (property === '$object') return { ...proxyTarget }
@@ -101,10 +91,14 @@ export function makeModel({ name, id, data, schema }) {
         // invalid property access attempt
         if (!(property in target)) {
           if (typeof property === 'string') {
-            throw new Error(`Property "${property}" does not exist for "${name}" model.`)
+            throw new Error(
+              `Property "${property}" does not exist for "${name}" model.`,
+            )
           } else {
-            // TODO: what do we do with Symbol properties? 
-            throw new Error(`Property [${typeof property}] does not exist for ${name} model.`)
+            // TODO: what do we do with Symbol properties?
+            throw new Error(
+              `Property [${typeof property}] does not exist for ${name} model.`,
+            )
           }
         }
 
@@ -112,15 +106,15 @@ export function makeModel({ name, id, data, schema }) {
         return {
           $value: target[property],
           $error: validationErrors[property],
-          $valid: !Boolean(validationErrors[property])
+          $valid: !validationErrors[property],
         }
       },
 
-      set: function set(target, property) {
+      set: function set(setTarget, property) {
         throwReadOnly(`Cannot set "${property}" property.`)
       },
 
-      deleteProperty: function deleteProperty(target, property) {
+      deleteProperty: function deleteProperty(deleteTarget, property) {
         throwReadOnly(`Cannot delete "${property} property.`)
       },
 
@@ -134,8 +128,33 @@ export function makeModel({ name, id, data, schema }) {
 
       preventExtensions: function preventExtensions() {
         return true
-      }
+      },
     })
+  }
+
+  function update(property, value) {
+    if (!(property in proxyTarget))
+      throw new Error(
+        `Property "${property}" does not exist for "${name}" model.`,
+      )
+    proxyTarget = {
+      ...proxyTarget,
+      [property]: value,
+    }
+
+    if (schema) {
+      try {
+        proxyTarget = schema.cast(proxyTarget)
+      } catch (e) {
+        // discard error
+      }
+    }
+
+    return buildProxy(proxyTarget)
+  }
+
+  function clone() {
+    return buildProxy(proxyTarget)
   }
 
   return buildProxy(proxyTarget)

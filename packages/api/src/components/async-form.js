@@ -6,7 +6,7 @@ const AsyncFormContext = React.createContext()
 
 AsyncFormContext.displayName = 'AsyncFormContext'
 
-const states = useModel.states
+const { states } = useModel
 
 function useAsyncForm() {
   const context = React.useContext(AsyncFormContext)
@@ -18,58 +18,62 @@ function useAsyncForm() {
 
 export function FormLoadError({ children }) {
   const { state } = useAsyncForm()
-  return (state === states.loadError) ? children : null
+  return state === states.loadError ? children : null
 }
 
 export function FormError({ children }) {
   const { state, error } = useAsyncForm()
-  return (state === states.error)
-    ? React.Children.map(children, (child) => React.cloneElement(child, { error }))
+  return state === states.error
+    ? React.Children.map(children, (child) =>
+        React.cloneElement(child, { error }),
+      )
     : null
 }
 
 export function FormLoading({ children }) {
   const { state } = useAsyncForm()
-  return ([
-    states.updating,
-    states.deleting,
-    states.loading,
-  ].indexOf(state) > -1) ? children : null
+  return [states.updating, states.deleting, states.loading].indexOf(state) > -1
+    ? children
+    : null
 }
 
 export function FormContent({ children }) {
   const { state } = useAsyncForm()
-  return ([
+  return [
     states.idle,
     states.error,
     states.loadSuccess,
     states.updating,
     states.updateSuccess,
-    states.deleting
-  ].indexOf(state) > -1) ? children : null
+    states.deleting,
+  ].indexOf(state) > -1
+    ? children
+    : null
 }
 
 export function FormActions({ children }) {
   const { state, handleDelete, handleSave } = useAsyncForm()
-  return ([
+  return [
     states.idle,
     states.error,
     states.loadSuccess,
     states.updating,
     states.updateSuccess,
-    states.deleting
-  ].indexOf(state) > -1)
-    ? React.Children.map(children, (child) => React.cloneElement(child, {
-      state,
-      handleDelete,
-      handleSave,
-    }))
+    states.deleting,
+  ].indexOf(state) > -1
+    ? React.Children.map(children, (child) =>
+        React.cloneElement(child, {
+          state,
+          handleDelete,
+          handleSave,
+        }),
+      )
     : null
 }
 
 export function FormDeleteSuccess({ children }) {
   const { state } = useAsyncForm()
-  return (state === states.deleteSuccess) ? children : null
+  return state === states.deleteSuccess ? children : null
 }
 
 export function AsyncForm({
@@ -79,9 +83,8 @@ export function AsyncForm({
   handleDelete,
   afterUpdate,
   afterDelete,
-  children
+  children,
 }) {
-
   async function handleSaveAndUpdate(e) {
     if (Boolean(e) && Boolean(e.preventDefault)) e.preventDefault()
     if (typeof handleSave !== 'function') return
@@ -91,7 +94,7 @@ export function AsyncForm({
     }
   }
 
-  async function handleDeleteAndUpdate(e) {
+  async function handleDeleteAndUpdate() {
     if (typeof handleDelete !== 'function') return
     await handleDelete()
     if (typeof afterDelete === 'function') {
@@ -100,12 +103,14 @@ export function AsyncForm({
   }
 
   return (
-    <AsyncFormContext.Provider value={{
-      state,
-      error,
-      handleDelete: handleDeleteAndUpdate,
-      handleSave: handleSaveAndUpdate,
-    }}>
+    <AsyncFormContext.Provider
+      value={{
+        state,
+        error,
+        handleDelete: handleDeleteAndUpdate,
+        handleSave: handleSaveAndUpdate,
+      }}
+    >
       <form onSubmit={handleSaveAndUpdate} noValidate autoComplete="off">
         {children}
       </form>
@@ -125,7 +130,7 @@ AsyncForm.defaultProps = {
   state: states.loading,
   error: null,
   handleDelete: null,
-  onUpdate: null
+  onUpdate: null,
 }
 
 export default AsyncForm

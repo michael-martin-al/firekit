@@ -2,7 +2,6 @@ import React from 'react'
 import { useQuery } from 'react-query'
 import { makeStateModel } from '../model-creators/make-state-model'
 
-
 export const states = makeStateModel([
   'idle',
   'error',
@@ -12,7 +11,7 @@ export const states = makeStateModel([
   'updating',
   'updateSuccess',
   'deleting',
-  'deleteSuccess'
+  'deleteSuccess',
 ])
 
 export function useModel({
@@ -20,12 +19,16 @@ export function useModel({
   saveModel,
   deleteModel,
   updateModel,
-  queryConfig = {}
+  queryConfig = {},
 }) {
   const [model, setModel] = React.useState()
   const [state, setState] = React.useState(states.loading)
   const [error, setError] = React.useState()
-  const { status: queryStatus, data, error: queryError } = useQuery(loadModel ? loadModel.key : null, loadModel, queryConfig)
+  const { status: queryStatus, data, error: queryError } = useQuery(
+    loadModel ? loadModel.key : null,
+    loadModel,
+    queryConfig,
+  )
 
   function handleAttributeChange(e) {
     const { value, name } = e.target
@@ -68,9 +71,8 @@ export function useModel({
       return () => {
         clearTimeout(timeout)
       }
-    } else {
-      return () => { }
     }
+    return () => {}
   }, [state])
 
   React.useEffect(() => {

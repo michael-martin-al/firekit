@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useModelCollection } from '../hooks/use-model-collection'
+
 const AsyncListContext = React.createContext()
 
 AsyncListContext.displayName = 'AsyncListContext'
 
-const states = useModelCollection.states
+const { states } = useModelCollection
 
 function useAsyncList() {
   const context = React.useContext(AsyncListContext)
@@ -18,24 +19,22 @@ function useAsyncList() {
 export function ListError({ children }) {
   const { state, error } = useAsyncList()
   return state === states.error
-    ? React.Children.map(children, (child) => React.cloneElement(child, { error }))
+    ? React.Children.map(children, (child) =>
+        React.cloneElement(child, { error }),
+      )
     : null
 }
 
 export function ListLoading({ children }) {
   const { state } = useAsyncList()
-  return (state === states.loading) ? children : null
+  return state === states.loading ? children : null
 }
 
 export function ListContent({ children }) {
   return children
 }
 
-export function AsyncList({
-  state,
-  error,
-  children
-}) {
+export function AsyncList({ state, error, children }) {
   return (
     <AsyncListContext.Provider value={{ state, error }}>
       {children}
