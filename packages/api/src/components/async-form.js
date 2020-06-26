@@ -88,17 +88,17 @@ export function AsyncForm({
   async function handleSaveAndUpdate(e) {
     if (Boolean(e) && Boolean(e.preventDefault)) e.preventDefault()
     if (typeof handleSave !== 'function') return
-    await handleSave()
+    const result = await handleSave()
     if (typeof afterUpdate === 'function') {
-      afterUpdate()
+      afterUpdate(result)
     }
   }
 
   async function handleDeleteAndUpdate() {
     if (typeof handleDelete !== 'function') return
-    await handleDelete()
+    const result = await handleDelete()
     if (typeof afterDelete === 'function') {
-      afterDelete()
+      afterDelete(result)
     }
   }
 

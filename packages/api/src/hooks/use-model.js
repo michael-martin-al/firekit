@@ -24,6 +24,7 @@ export function useModel({
   const [model, setModel] = React.useState()
   const [state, setState] = React.useState(states.loading)
   const [error, setError] = React.useState()
+
   const { status: queryStatus, data, error: queryError } = useQuery(
     loadModel ? loadModel.key : null,
     loadModel,

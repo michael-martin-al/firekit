@@ -88,6 +88,10 @@ export function makeModel({ name, id, data, schema }) {
         if (property === '$object') return { ...proxyTarget }
         if (property === '$name') return name
 
+        // Let some things pass through
+        if (property === 'toJSON') return getTarget.toJSON
+        if (property === 'valueOf') return getTarget.valueOf
+
         // invalid property access attempt
         if (!(property in target)) {
           if (typeof property === 'string') {
