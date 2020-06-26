@@ -16,9 +16,9 @@
   "scripts": {
     "test": "npx jest",
     "build": "npm run compile",
-    "compile": "BABEL_ENV=build ../../node_modules/.bin/babel --root-mode upward src --out-dir lib --source-maps --extensions .js --delete-dir-on-start --no-comments",
+    "compile": "..\\..\\node_modules\\.bin\\babel --root-mode upward src --out-dir lib --source-maps --extensions .js --delete-dir-on-start --no-comments",
     "prepare": "npm run compile",
-    "watch": "BABEL_ENV=build ../../node_modules/.bin/babel --root-mode upward src --out-dir lib --source-maps --extensions .js --delete-dir-on-start --no-comments --watch"
+    "watch": "..\\..\\node_modules\\.bin\\babel --root-mode upward src --out-dir lib --source-maps --extensions .js --delete-dir-on-start --no-comments --watch"
   },
   "devDependencies": {
     "firebase": "^7.14.2",
