@@ -13,13 +13,8 @@
   ],
   "env": {
     "build": {
-      "ignore": [
-        "**/*.test.js",
-        "__tests__"
-      ]
+      "ignore": []
     }
   },
-  "ignore": [
-    "node_modules"
-  ]
+  "ignore": ["node_modules"]
 }
