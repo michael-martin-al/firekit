@@ -34,6 +34,7 @@ export function makeModel({ name, id, data, schema }) {
   }
 
   let proxyTarget = { ...data }
+  const touched = {}
 
   if (schema) {
     try {
@@ -111,6 +112,7 @@ export function makeModel({ name, id, data, schema }) {
           $value: target[property],
           $error: validationErrors[property],
           $valid: !validationErrors[property],
+          $touched: touched[property],
         }
       },
 
@@ -153,6 +155,8 @@ export function makeModel({ name, id, data, schema }) {
         // discard error
       }
     }
+
+    touched[property] = true
 
     return buildProxy(proxyTarget)
   }
