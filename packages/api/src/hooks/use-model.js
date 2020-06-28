@@ -25,11 +25,12 @@ export function useModel({
   const [state, setState] = React.useState(states.loading)
   const [error, setError] = React.useState()
 
-  const { status: queryStatus, data, error: queryError } = useQuery(
-    loadModel ? loadModel.key : null,
-    loadModel,
-    queryConfig,
-  )
+  const {
+    status: queryStatus,
+    data,
+    error: queryError,
+    refetch: reload,
+  } = useQuery(loadModel ? loadModel.key : null, loadModel, queryConfig)
 
   function handleAttributeChange(e) {
     const { value, name } = e.target
@@ -97,6 +98,7 @@ export function useModel({
     handleDelete,
     state,
     error,
+    reload,
   }
 }
 
