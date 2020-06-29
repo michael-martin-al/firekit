@@ -50,6 +50,7 @@ export function useModel({
   }
 
   async function handleSave() {
+    let result
     if (Boolean(model) && typeof saveModel === 'function') {
       setState(states.updating)
       setError(null)
@@ -57,13 +58,14 @@ export function useModel({
         const savedModel = await saveModel(model)
         if (savedModel) setModel(savedModel)
         setState(states.updateSuccess)
-        return savedModel
+        result = savedModel
       } catch (er) {
         setError(er)
         setState(states.error)
-        return er
+        result = er
       }
     }
+    return result
   }
 
   React.useEffect(() => {
