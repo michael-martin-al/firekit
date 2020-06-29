@@ -57,9 +57,11 @@ export function useModel({
         const savedModel = await saveModel(model)
         if (savedModel) setModel(savedModel)
         setState(states.updateSuccess)
+        return savedModel
       } catch (er) {
         setError(er)
         setState(states.error)
+        return er
       }
     }
   }
