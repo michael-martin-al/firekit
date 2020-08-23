@@ -24,7 +24,7 @@ export function useModelCollection({
     data: collection,
     error,
     refetch: reload,
-    isFetching,
+    ...remainingProps
   } = useQuery(collectionKey, loadCollection, queryConfig)
 
   React.useEffect(() => {
@@ -36,7 +36,7 @@ export function useModelCollection({
     state,
     error,
     reload,
-    isFetching,
+    ...remainingProps,
   }
 }
 
