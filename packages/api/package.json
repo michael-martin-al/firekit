@@ -1,6 +1,6 @@
 {
   "name": "@firekit/api",
-  "version": "1.0.2-y.0",
+  "version": "1.0.2-beta.6.0",
   "description": "Opinionated library of Firestore components, models, clients, etc.",
   "author": "Michael Martin <martinmsm@gmail.com>",
   "homepage": "https://github.com/michael-martin-al/firekit",
