@@ -15,6 +15,7 @@ export function makeModel({ name, id, data, schema }) {
     'length',
     'then',
     '$id',
+    'id',
     '$update',
     '$clone',
     '$valid',
@@ -77,6 +78,7 @@ export function makeModel({ name, id, data, schema }) {
 
         // speical $ methods for model api
         if (property === '$id') return id
+        if (property === 'id') return id
 
         /* eslint-disable-next-line no-use-before-define */
         if (property === '$update') return update
