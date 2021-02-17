@@ -59,7 +59,7 @@ export function loadCollection({
         if (typeof value !== 'undefined') {
           query = query.where(field, operator, value)
         } else {
-          console.error(
+          console.debug(
             `Called 'where' without a value. FIELD: ${field} COLLECTION PATH: ${collectionPath}`,
           )
         }
