@@ -56,12 +56,20 @@ export function loadCollection({
 
     if (Array.isArray(where)) {
       where.forEach(({ field, operator, value }) => {
-        if (typeof value !== 'undefined') {
-          query = query.where(field, operator, value)
-        } else {
+        if (typeof value === 'undefined') {
           console.debug(
-            `Called 'where' without a value. FIELD: ${field} COLLECTION PATH: ${collectionPath}`,
+            `Called 'where' without a value. FIELD: ${field} COLLECTION PATH: ${collectionPath} OPERATOR: ${operator}`,
           )
+        } else if (typeof operator === 'undefined') {
+          console.debug(
+            `Called 'where' without an operator. FIELD: ${field} COLLECTION PATH: ${collectionPath} VALUE: ${value}`,
+          )
+        } else if (typeof field === 'undefined') {
+          console.debug(
+            `Called 'where' without a field. COLLECTION PATH: ${collectionPath} VALUE: ${value} OPERATOR: ${operator}`,
+          )
+        } else {
+          query = query.where(field, operator, value)
         }
       })
     }
