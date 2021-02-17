@@ -56,7 +56,13 @@ export function loadCollection({
 
     if (Array.isArray(where)) {
       where.forEach(({ field, operator, value }) => {
-        query = query.where(field, operator, value)
+        if (typeof value !== 'undefined') {
+          query = query.where(field, operator, value)
+        } else {
+          console.error(
+            `Called 'where' without a value. FIELD: ${field} COLLECTION PATH: ${collectionPath}`,
+          )
+        }
       })
     }
 
