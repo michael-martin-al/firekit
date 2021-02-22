@@ -51,7 +51,6 @@ export function loadCollection({
 } = {}) {
   async function loader() {
     const docs = []
-    const collection
     let query = firebase.app().firestore().collection(collectionPath)
 
     if (Array.isArray(where)) {
@@ -83,7 +82,7 @@ export function loadCollection({
       query = query.limit(limit)
     }
 
-    collection = await query.get()
+    const collection = await query.get()
 
     collection.forEach((doc) => {
       try {
