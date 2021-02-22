@@ -83,13 +83,7 @@ export function loadCollection({
       query = query.limit(limit)
     }
 
-    try {
-      collection = await query.get()
-    } catch (e) {
-      throw new Error(
-        `Failed to load collection from Firestore at ${collectionPath}`,
-      )
-    }
+    collection = await query.get()
 
     collection.forEach((doc) => {
       try {
