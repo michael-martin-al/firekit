@@ -51,7 +51,7 @@ export function loadCollection({
 } = {}) {
   async function loader() {
     const docs = []
-    let collection
+    const collection
     let query = firebase.app().firestore().collection(collectionPath)
 
     if (Array.isArray(where)) {
