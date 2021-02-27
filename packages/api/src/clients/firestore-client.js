@@ -55,6 +55,7 @@ export function loadCollection({
 
     if (Array.isArray(where)) {
       where.forEach(({ field, operator, value }) => {
+        /* eslint-disable no-console */
         if (typeof value === 'undefined') {
           console.debug(
             `Called 'where' without a value. FIELD: ${field} COLLECTION PATH: ${collectionPath} OPERATOR: ${operator}`,
@@ -76,6 +77,14 @@ export function loadCollection({
     if (order !== null && typeof order === 'object' && 'field' in order) {
       const { field, direction = 'asc' } = order
       query = query.orderBy(field, direction)
+    }
+
+    if (Array.isArray(order)) {
+      order.forEach(({ field, direction = 'asc' }) => {
+        if (field) {
+          query = query.orderBy(field, direction)
+        }
+      })
     }
 
     if (typeof limit === 'number') {
