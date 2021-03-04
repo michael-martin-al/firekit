@@ -87,7 +87,7 @@ export function loadCollection({
       query = query.orderBy(field, direction)
     }
 
-    if (typeof limit === 'number') {
+    if (typeof limit === 'number' && limit > 0) {
       query = query.limit(limit)
     }
 
