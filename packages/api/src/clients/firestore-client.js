@@ -45,9 +45,9 @@ export function load({ Model, docPath } = {}) {
 export function loadCollection({
   Model,
   collectionPath,
-  where,
-  order,
-  limit,
+  where = [],
+  order = [],
+  limit = 0,
 } = {}) {
   async function loader() {
     const docs = []
@@ -74,17 +74,17 @@ export function loadCollection({
       })
     }
 
-    if (order !== null && typeof order === 'object' && 'field' in order) {
-      const { field, direction = 'asc' } = order
-      query = query.orderBy(field, direction)
-    }
-
     if (Array.isArray(order)) {
       order.forEach(({ field, direction = 'asc' }) => {
         if (field) {
           query = query.orderBy(field, direction)
         }
       })
+    }
+
+    if (order !== null && typeof order === 'object' && 'field' in order) {
+      const { field, direction = 'asc' } = order
+      query = query.orderBy(field, direction)
     }
 
     if (typeof limit === 'number') {
